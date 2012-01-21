@@ -8,7 +8,7 @@ class RPing
     @count    = options.fetch(:count, 1)
     @interval = options.fetch(:interval, 1)
     @timeout  = options.fetch(:timeout, 4)
-    @icmp_id  = Process.pid & 0xffff
+    @icmp_id  = (self.object_id ^  Process.pid) & 0xffff
     @seq_num  = 1
   end
 
