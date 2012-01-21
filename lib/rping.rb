@@ -15,6 +15,21 @@ class RPing
     self.new(options).ping(dest, &block)
   end
 
+  def self.multi_ping(dests, options = {})
+    ths = []
+    reply_h = {}
+
+    dests.each do |dest|
+      ths << Thread.start {
+        reply_h[dest] = RPing.ping(dest, options)
+      }
+    end
+
+    ths.each {|th| th.join }
+
+    return reply_h
+  end
+
   def ping(addr, &block)
     unless addr =~ /\A\d{3}\.\d{3}\.\d{3}\.\d{3}\Z/
       addr = IPSocket.getaddress(addr)

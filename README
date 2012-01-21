@@ -37,6 +37,16 @@ https://bitbucket.org/winebarrel/rping
     p reply
     #=> {:time=>0.0, :src=>"127.0.0.1", :dest=>"127.0.0.1", :ttl=>128, :size=>36, :seq=>1}
   end
+  
+  dests = (1..255).map {|i| "127.0.0.#{i}" }
+  p RPing.multi_ping(dests, :timeout => 0.3)
+  #=> {"127.0.0.1" => [{:time=>0.0, :dest=>"127.0.0.1", :src=>"127.0.0.1", :ttl=>128, :size=>36, :seq=>1}],
+  #    "127.0.0.2" =>[nil],
+  #    "127.0.0.3" =>[nil],
+  #    ...
+
+pp RPing.multi_ping(dest, :timeout => 0.3)
+
 
 == Reference Documents
 
