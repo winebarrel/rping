@@ -12,6 +12,10 @@ class RPing
     @seq_num  = 1
   end
 
+  def self.ping(dest, options = {}, &block)
+    self.new(options).ping(dest, &block)
+  end
+
   def ping(addr, &block)
     unless addr =~ /\A\d{3}\.\d{3}\.\d{3}\.\d{3}\Z/
       addr = IPSocket.getaddress(addr)
