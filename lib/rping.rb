@@ -31,7 +31,7 @@ class RPing
   end
 
   def ping(addr, &block)
-    unless addr =~ /\A\d{3}\.\d{3}\.\d{3}\.\d{3}\Z/
+    unless addr =~ /\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\Z/
       addr = IPSocket.getaddress(addr)
     end
 
