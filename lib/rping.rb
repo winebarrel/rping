@@ -68,6 +68,7 @@ class RPing
     Thread.start do
       @count.times do
         reply = ping_recv0(sock)
+        redo if reply == :redo
         yield(reply) if block
         buf << reply if buf
       end
@@ -94,6 +95,8 @@ class RPing
             :seq  => icmp[4],
             :time => (recv_time - icmp[5]) * 1000,
           }
+        else
+          reply = :redo
         end
       end
     rescue Timeout::Error
