@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'rubygems'
+require 'lib/rping'
+require 'optparse'
+
+$stdout.sync = true
+
+options = {}
+dest = nil
+
+ARGV.options do |opt|
+  opt.on('-c COUNT')       {|v| options[:count]    = v.to_i }
+  opt.on('-i INTERVAL')    {|v| options[:interval] = v.to_i }
+  opt.on('-w TIMEOUT')     {|v| options[:timeout]  = v.to_i }
+  opt.on('-d DESTINATION') {|v| dest = v }
+
+  opt.parse!
+
+  unless dest
+    puts opt.help
+    exit 1
+  end
+end
+
+puts "PING #{dest}"
+
+RPing.new(options).ping(dest) do |r|
+  if r
+    puts <<-EOS
+#{r[:size]} bytes from #{dest} (#{r[:dest]}): icmp_seq=#{r[:seq]} ttl=#{r[:ttl]} time=#{'%.1f' % r[:time]} ms
+    EOS
+  else
+    puts 'packet loss'
+  end
+end
