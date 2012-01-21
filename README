@@ -8,21 +8,23 @@ rping is a ruby implementation of ping.
 
 https://bitbucket.org/winebarrel/rping
 
-
 == Example
 === Command
 
-  shell> rping
+  root> rping
   Usage: rping [options]
       -c COUNT
       -i INTERVAL
       -w TIMEOUT
       -d DESTINATION
-  shell> rping -c 3 -d localhost
+  root> rping -c 3 -d localhost
   PING localhost
   36 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=128 time=1.0 ms
   36 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=128 time=0.0 ms
   36 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=128 time=0.0 ms
+
+* rping use 'raw socket'.
+  * root authority is required.
 
 == Library
 
