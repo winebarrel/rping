@@ -1,0 +1,38 @@
+= rping
+
+== Description
+
+rping is a ruby implementation of ping.
+
+== Source Code
+
+https://bitbucket.org/winebarrel/rping
+
+
+== Example
+=== Command
+
+  shell> rping
+  Usage: rping [options]
+      -c COUNT
+      -i INTERVAL
+      -w TIMEOUT
+      -d DESTINATION
+  shell> rping -c 3 -d localhost
+  PING localhost
+  36 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=128 time=1.0 ms
+  36 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=128 time=0.0 ms
+  36 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=128 time=0.0 ms
+
+== Library
+
+  require 'lib/rping'
+  
+  p RPing.ping('localhost')
+  #=> [{:time=>0.0, :dest=>"127.0.0.1", :src=>"127.0.0.1", :ttl=>128, :size=>36, :seq=>1}]
+  
+  RPing.ping('127.0.0.1', :count => 3) do |reply|
+    p reply
+    #=> {:time=>0.0, :src=>"127.0.0.1", :dest=>"127.0.0.1", :ttl=>128, :size=>36, :seq=>1}
+  end
+
