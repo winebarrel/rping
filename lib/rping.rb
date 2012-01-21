@@ -1,5 +1,4 @@
 require 'socket'
-require 'timeout'
 
 class RPing
   MAX_LEN = 64 * 1024
@@ -65,23 +64,21 @@ class RPing
     reply = nil
 
     begin
-      timeout(@timeout) do
-        if select([sock], nil, nil, @timeout)
-          msg = sock.recv(MAX_LEN)
-          recv_time = Time.now.to_f
-          ip, icmp = unpack_echo_reply(msg)
+      if select([sock], nil, nil, @timeout)
+        msg = sock.recv(MAX_LEN)
+        recv_time = Time.now.to_f
+        ip, icmp = unpack_echo_reply(msg)
 
-          # icmp[0] == 0: Type == Echo Reply
-          if icmp[0] == 0 and icmp[3] == @icmp_id
-            reply = {
-              :dest => ip[8].bytes.to_a.join('.'),
-              :src  => ip[9].bytes.to_a.join('.'),
-              :size => msg.length,
-              :ttl  => ip[5],
-              :seq  => icmp[4],
-              :time => (recv_time - icmp[5]) * 1000,
-            }
-          end
+        # icmp[0] == 0: Type == Echo Reply
+        if icmp[0] == 0 and icmp[3] == @icmp_id
+          reply = {
+            :dest => ip[8].bytes.to_a.join('.'),
+            :src  => ip[9].bytes.to_a.join('.'),
+            :size => msg.length,
+            :ttl  => ip[5],
+            :seq  => icmp[4],
+            :time => (recv_time - icmp[5]) * 1000,
+          }
         end
       end
     rescue Timeout::Error
