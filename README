@@ -4,6 +4,9 @@
 
 rping is a ruby implementation of ping.
 
+* rping use 'raw socket'.
+* root authority is required.
+
 == Source Code
 
 https://bitbucket.org/winebarrel/rping
@@ -22,9 +25,6 @@ https://bitbucket.org/winebarrel/rping
   36 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=128 time=1.0 ms
   36 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=128 time=0.0 ms
   36 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=128 time=0.0 ms
-
-* rping use 'raw socket'.
-  * root authority is required.
 
 == Library
 
