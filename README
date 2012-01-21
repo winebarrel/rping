@@ -38,3 +38,8 @@ https://bitbucket.org/winebarrel/rping
     #=> {:time=>0.0, :src=>"127.0.0.1", :dest=>"127.0.0.1", :ttl=>128, :size=>36, :seq=>1}
   end
 
+== Reference Documents
+
+* http://www.notwork.org/ipr/article/serial08.html
+* http://www.faqs.org/rfcs/rfc792.html
+
